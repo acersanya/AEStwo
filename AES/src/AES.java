@@ -128,7 +128,13 @@ public class AES {
 
 		return tmp;
 	}
-
+/**
+ * ADD ROUND KEY NOT USE
+ * @param state
+ * @param w
+ * @param round
+ * @return 
+ */
 	private static byte[][] AddRoundKey(byte[][] state, byte[][] w, int round) {
 
 		byte[][] tmp = new byte[state.length][state[0].length];
@@ -233,9 +239,10 @@ public class AES {
 
 		for (int i = 0; i < in.length; i++)
 			state[i / 4][i % 4] = in[i%4*4+i/4];
-
+        // HERE NR IS NUMBER OF ROUNDS!!!!
 		state = AddRoundKey(state, w, 0);
 		for (int round = 1; round < Nr; round++) {
+  
 			state = SubBytes(state);
 			state = ShiftRows(state);
 			state = MixColumns(state);
@@ -260,7 +267,9 @@ public class AES {
 			state[i / 4][i % 4] = in[i%4*4+i/4];
 
 		state = AddRoundKey(state, w, Nr);
+                System.out.println(Nr);
 		for (int round = Nr-1; round >=1; round--) {
+         
 			state = InvSubBytes(state);
 			state = InvShiftRows(state);
 			state = AddRoundKey(state, w, round);
